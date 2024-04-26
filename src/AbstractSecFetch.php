@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpKernel\Exception\InvalidMetadataException;
 
-abstract class SecFetchBase
+abstract class AbstractSecFetch
 {
     protected array $default = [];
     protected string $name = '';
