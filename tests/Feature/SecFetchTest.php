@@ -40,7 +40,7 @@ class SecFetchTest extends TestCase
     {
         Exceptions::fake();
 
-        $response = $this->withHeader('Sec-Fetch-Site', 'cross-origin')
+        $response = $this->withHeader('Sec-Fetch-Site', 'cross-site')
             ->postJson('site');
 
         Exceptions::assertReported(fn (InvalidMetadataException $e) => $e->getMessage() === 'Invalid Sec-Fetch-Site.');
@@ -52,9 +52,9 @@ class SecFetchTest extends TestCase
     {
         Exceptions::fake();
 
-        Route::post('site-multi', fn () => response()->json())->middleware([SecFetchSite::class.':same-origin,cross-origin']);
+        Route::post('site-multi', fn () => response()->json())->middleware([SecFetchSite::class.':same-origin,cross-site']);
 
-        $response = $this->withHeader('Sec-Fetch-Site', 'cross-origin')
+        $response = $this->withHeader('Sec-Fetch-Site', 'cross-site')
             ->postJson('site-multi');
 
         Exceptions::assertNothingReported();
