@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Exception\InvalidMetadataException;
 
 abstract class SecFetchBase
 {
-    protected string $default = '';
+    protected array $default = [];
     protected string $name = '';
 
     /**
@@ -26,7 +26,7 @@ abstract class SecFetchBase
     {
         if (
             Collection::wrap($allow)
-                ->whenEmpty(fn (Collection $collection) => $collection->push($this->default))
+                ->whenEmpty(fn (Collection $collection) => $collection->push(...$this->default))
                 ->doesntContain($request->header($this->name))
         ) {
             throw new InvalidMetadataException("Invalid $this->name.");

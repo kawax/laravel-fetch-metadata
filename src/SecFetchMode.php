@@ -5,6 +5,6 @@ namespace Revolution\FetchMetadata\Middleware;
 
 class SecFetchMode extends SecFetchBase
 {
-    protected string $default = 'same-origin';
+    protected array $default = ['navigate', 'cors'];
     protected string $name = 'Sec-Fetch-Mode';
 }

@@ -64,7 +64,7 @@ class SecFetchTest extends TestCase
 
     public function test_mode_successful()
     {
-        $response = $this->withHeader('Sec-Fetch-Mode', 'same-origin')
+        $response = $this->withHeader('Sec-Fetch-Mode', 'navigate')
             ->postJson('mode');
 
         $response->assertSuccessful();
@@ -74,7 +74,7 @@ class SecFetchTest extends TestCase
     {
         Exceptions::fake();
 
-        $response = $this->withHeader('Sec-Fetch-Mode', 'cross-origin')
+        $response = $this->withHeader('Sec-Fetch-Mode', 'no-cors')
             ->postJson('mode');
 
         Exceptions::assertReported(fn (InvalidMetadataException $e) => $e->getMessage() === 'Invalid Sec-Fetch-Mode.');

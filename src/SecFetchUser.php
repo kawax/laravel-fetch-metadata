@@ -5,6 +5,6 @@ namespace Revolution\FetchMetadata\Middleware;
 
 class SecFetchUser extends SecFetchBase
 {
-    protected string $default = '?1';
+    protected array $default = ['?1'];
     protected string $name = 'Sec-Fetch-User';
 }

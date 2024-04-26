@@ -5,6 +5,6 @@ namespace Revolution\FetchMetadata\Middleware;
 
 class SecFetchSite extends SecFetchBase
 {
-    protected string $default = 'same-origin';
+    protected array $default = ['same-origin', 'none'];
     protected string $name = 'Sec-Fetch-Site';
 }

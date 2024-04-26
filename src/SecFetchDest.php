@@ -5,6 +5,6 @@ namespace Revolution\FetchMetadata\Middleware;
 
 class SecFetchDest extends SecFetchBase
 {
-    protected string $default = 'document';
+    protected array $default = ['document'];
     protected string $name = 'Sec-Fetch-Dest';
 }

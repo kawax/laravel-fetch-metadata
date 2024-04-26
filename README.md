@@ -65,7 +65,7 @@ use Revolution\FetchMetadata\Middleware\SecFetchSite;
 ```
 
 ## Usage in routing
-Default behavior only allows `same-origin`.
+Default behavior only allows `same-origin` and `none`(user-originated operation).
 
 ```php
 use Illuminate\Support\Facades\Route;
