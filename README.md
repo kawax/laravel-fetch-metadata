@@ -1,5 +1,8 @@
 # Fetch metadata middleware for Laravel
 
+[![Maintainability](https://qlty.sh/badges/53838444-e6fd-4451-9cdf-338fff5d1f99/maintainability.svg)](https://qlty.sh/gh/invokable/projects/laravel-fetch-metadata)
+[![Code Coverage](https://qlty.sh/badges/53838444-e6fd-4451-9cdf-338fff5d1f99/test_coverage.svg)](https://qlty.sh/gh/invokable/projects/laravel-fetch-metadata)
+
 https://developer.mozilla.org/en-US/docs/Glossary/Fetch_metadata_request_header
 
 ## Overview
@@ -8,7 +11,7 @@ Laravel Fetch Metadata is a security-focused middleware package that validates S
 
 By leveraging the browser's built-in security features, this package helps prevent malicious requests from unauthorized origins while maintaining a seamless experience for legitimate users.
 
-## Requirement
+## Requirements
 
 - PHP ^8.2
 - Laravel ^11.x
