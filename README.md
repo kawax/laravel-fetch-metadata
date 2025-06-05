@@ -249,16 +249,16 @@ Route::post('admin/critical-action', function (Request $request) {
 For more information about `Sec-Fetch-User` values, see the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-User).
 
 ## Error Handling
-When Sec-Fetch value is invalid, throw the `Symfony\Component\HttpKernel\Exception\InvalidMetadataException`
+When Sec-Fetch value is invalid, throw the `Symfony\Component\HttpKernel\Exception\BadRequestHttpException`
 
 You can change the response in `bootstrap/app.php`.
 
 ```php
 use Illuminate\Http\Request;
-use Symfony\Component\HttpKernel\Exception\InvalidMetadataException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  
 ->withExceptions(function (Exceptions $exceptions) {
-    $exceptions->render(function (InvalidMetadataException $e, Request $request) {
+    $exceptions->render(function (BadRequestHttpException $e, Request $request) {
         if ($request->expectsJson()) {
             return response()->json([
                 'message' => $e->getMessage(),
