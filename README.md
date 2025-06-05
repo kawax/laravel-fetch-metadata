@@ -2,6 +2,12 @@
 
 https://developer.mozilla.org/en-US/docs/Glossary/Fetch_metadata_request_header
 
+## Overview
+
+Laravel Fetch Metadata is a security-focused middleware package that validates Sec-Fetch-* HTTP headers to protect your Laravel applications from CSRF attacks and unwanted cross-site requests. The package provides four specialized middleware classes that examine browser-generated fetch metadata headers, allowing you to control which types of requests are permitted based on their origin, mode, destination, and user interaction status.
+
+By leveraging the browser's built-in security features, this package helps prevent malicious requests from unauthorized origins while maintaining a seamless experience for legitimate users.
+
 ## Requirement
 
 - PHP ^8.2
