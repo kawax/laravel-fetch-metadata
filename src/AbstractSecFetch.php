@@ -12,15 +12,14 @@ use Symfony\Component\HttpKernel\Exception\InvalidMetadataException;
 abstract class AbstractSecFetch
 {
     protected array $default = [];
+
     protected string $name = '';
 
     /**
      * Handle an incoming request.
      *
-     * @param  Request  $request
      * @param  Closure(Request): mixed  $next
-     * @param  string  ...$allow
-     * @return mixed
+     *
      * @throws InvalidMetadataException
      */
     public function handle(Request $request, Closure $next, string ...$allow): mixed
