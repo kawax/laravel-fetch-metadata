@@ -120,6 +120,94 @@ Route::post('user/update-password', function (Request $request){
 })->middleware(SecFetchSite::class.':same-origin,cross-site');
 ```
 
+## Usage Examples
+
+This section demonstrates common use cases for the `Sec-Fetch-Site` and `Sec-Fetch-Mode` middleware with practical examples.
+
+### Sec-Fetch-Site Examples
+
+The `Sec-Fetch-Site` header indicates the relationship between the request initiator's origin and the target's origin. By default, this middleware allows `same-origin` and `none` (user-initiated requests).
+
+**Basic protection for sensitive operations:**
+```php
+// Only allow requests from the same origin or direct user navigation
+Route::post('user/delete-account', function (Request $request) {
+    // Handle account deletion
+})->middleware('sec-fetch-site');
+```
+
+**Allow cross-site requests for public APIs:**
+```php
+// Allow requests from any origin for public API endpoints
+Route::get('api/public/data', function (Request $request) {
+    return response()->json(['data' => 'public']);
+})->middleware('sec-fetch-site:same-origin,cross-site,same-site');
+```
+
+**Restrict to same-origin only:**
+```php
+// Only allow requests from the exact same origin
+Route::post('admin/settings', function (Request $request) {
+    // Handle admin settings
+})->middleware('sec-fetch-site:same-origin');
+```
+
+**Allow same-site requests (subdomains):**
+```php
+// Allow requests from subdomains of the same site
+Route::post('api/internal', function (Request $request) {
+    // Handle internal API calls
+})->middleware('sec-fetch-site:same-origin,same-site');
+```
+
+For more information about `Sec-Fetch-Site` values, see the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-Site).
+
+### Sec-Fetch-Mode Examples
+
+The `Sec-Fetch-Mode` header indicates the mode of the request. By default, this middleware allows `navigate` and `cors` requests.
+
+**Protect forms from programmatic requests:**
+```php
+// Only allow navigation requests (user clicking links/submitting forms)
+Route::post('contact/submit', function (Request $request) {
+    // Handle contact form submission
+})->middleware('sec-fetch-mode:navigate');
+```
+
+**Allow CORS requests for API endpoints:**
+```php
+// Allow both navigation and CORS requests for API endpoints
+Route::post('api/data', function (Request $request) {
+    return response()->json(['status' => 'success']);
+})->middleware('sec-fetch-mode'); // Uses default: navigate,cors
+```
+
+**Restrict to navigation only:**
+```php
+// Only allow user-initiated navigation (clicking links, form submissions)
+Route::post('user/login', function (Request $request) {
+    // Handle user login
+})->middleware('sec-fetch-mode:navigate');
+```
+
+**Allow all request modes:**
+```php
+// Allow navigation, CORS, no-cors, same-origin, and websocket requests
+Route::post('api/webhook', function (Request $request) {
+    // Handle webhook data
+})->middleware('sec-fetch-mode:navigate,cors,no-cors,same-origin,websocket');
+```
+
+**Combining multiple middleware:**
+```php
+// Use both Sec-Fetch-Site and Sec-Fetch-Mode for enhanced security
+Route::post('user/update-profile', function (Request $request) {
+    // Handle profile updates
+})->middleware(['sec-fetch-site:same-origin', 'sec-fetch-mode:navigate']);
+```
+
+For more information about `Sec-Fetch-Mode` values, see the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-Mode).
+
 ## Error Handling
 When Sec-Fetch value is invalid, throw the `Symfony\Component\HttpKernel\Exception\InvalidMetadataException`
 
