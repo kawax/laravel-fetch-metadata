@@ -11,6 +11,8 @@ Laravel Fetch Metadata is a security-focused middleware package that validates S
 
 By leveraging the browser's built-in security features, this package helps prevent malicious requests from unauthorized origins while maintaining a seamless experience for legitimate users.
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/invokable/laravel-fetch-metadata)
+
 ## Requirements
 
 - PHP ^8.2
