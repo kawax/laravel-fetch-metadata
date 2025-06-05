@@ -262,7 +262,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
         if ($request->expectsJson()) {
             return response()->json([
                 'message' => $e->getMessage(),
-            ], 500);
+            ], 400);
         }
     });
 })
