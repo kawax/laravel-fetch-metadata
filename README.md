@@ -208,6 +208,46 @@ Route::post('user/update-profile', function (Request $request) {
 
 For more information about `Sec-Fetch-Mode` values, see the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-Mode).
 
+### Sec-Fetch-User Examples
+
+The `Sec-Fetch-User` header indicates whether the request was initiated by user interaction. This middleware can be used to reject requests that are not initiated by user interaction, thus preventing automatic scraping and bot requests.
+
+**⚠️ Warning:** Using `Sec-Fetch-User` will also block search engine crawlers, so caution is advised when implementing it on public pages that need to be indexed.
+
+**Protect sensitive operations from automated requests:**
+```php
+// Only allow requests initiated by user interaction
+Route::post('user/transfer-funds', function (Request $request) {
+    // Handle fund transfers
+})->middleware('sec-fetch-user');
+```
+
+**Prevent automated form submissions:**
+```php
+// Block automated bot submissions on contact forms
+Route::post('contact/submit', function (Request $request) {
+    // Handle contact form submission
+})->middleware('sec-fetch-user');
+```
+
+**Protect API endpoints from scraping:**
+```php
+// Prevent automated data harvesting
+Route::get('api/user/profile', function (Request $request) {
+    return response()->json(['profile' => 'data']);
+})->middleware('sec-fetch-user');
+```
+
+**Combining with other middleware for enhanced security:**
+```php
+// Use multiple fetch metadata headers for maximum protection
+Route::post('admin/critical-action', function (Request $request) {
+    // Handle critical admin actions
+})->middleware(['sec-fetch-site:same-origin', 'sec-fetch-mode:navigate', 'sec-fetch-user']);
+```
+
+For more information about `Sec-Fetch-User` values, see the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-User).
+
 ## Error Handling
 When Sec-Fetch value is invalid, throw the `Symfony\Component\HttpKernel\Exception\InvalidMetadataException`
 
