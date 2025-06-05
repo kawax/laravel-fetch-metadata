@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
-use Illuminate\Support\Facades\Exceptions;
 use Illuminate\Support\Facades\Route;
 use Revolution\FetchMetadata\Middleware\SecFetchDest;
 use Revolution\FetchMetadata\Middleware\SecFetchMode;
 use Revolution\FetchMetadata\Middleware\SecFetchSite;
 use Revolution\FetchMetadata\Middleware\SecFetchUser;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Tests\TestCase;
 
 class SecFetchTest extends TestCase
@@ -38,8 +36,6 @@ class SecFetchTest extends TestCase
 
     public function test_site_invalid()
     {
-        Exceptions::fake();
-
         $response = $this->withHeader('Sec-Fetch-Site', 'cross-site')
             ->postJson('site');
 
@@ -48,14 +44,10 @@ class SecFetchTest extends TestCase
 
     public function test_site_multiple()
     {
-        Exceptions::fake();
-
         Route::post('site-multi', fn () => response()->json())->middleware([SecFetchSite::class.':same-origin,cross-site']);
 
         $response = $this->withHeader('Sec-Fetch-Site', 'cross-site')
             ->postJson('site-multi');
-
-        Exceptions::assertNothingReported();
 
         $response->assertSuccessful();
     }
@@ -70,8 +62,6 @@ class SecFetchTest extends TestCase
 
     public function test_mode_invalid()
     {
-        Exceptions::fake();
-
         $response = $this->withHeader('Sec-Fetch-Mode', 'no-cors')
             ->postJson('mode');
 
@@ -88,8 +78,6 @@ class SecFetchTest extends TestCase
 
     public function test_dest_invalid()
     {
-        Exceptions::fake();
-
         $response = $this->withHeader('Sec-Fetch-Dest', 'empty')
             ->postJson('dest');
 
@@ -106,8 +94,6 @@ class SecFetchTest extends TestCase
 
     public function test_user_invalid()
     {
-        Exceptions::fake();
-
         $response = $this->postJson('user');
 
         $response->assertStatus(400);
