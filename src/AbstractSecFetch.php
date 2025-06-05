@@ -7,7 +7,7 @@ namespace Revolution\FetchMetadata\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Symfony\Component\HttpKernel\Exception\InvalidMetadataException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 abstract class AbstractSecFetch
 {
@@ -20,7 +20,7 @@ abstract class AbstractSecFetch
      *
      * @param  Closure(Request): mixed  $next
      *
-     * @throws InvalidMetadataException
+     * @throws BadRequestHttpException
      */
     public function handle(Request $request, Closure $next, string ...$allow): mixed
     {
@@ -29,7 +29,7 @@ abstract class AbstractSecFetch
                 ->whenEmpty(fn (Collection $collection) => $collection->push(...$this->default))
                 ->doesntContain($request->header($this->name))
         ) {
-            throw new InvalidMetadataException("Invalid $this->name.");
+            throw new BadRequestHttpException("Invalid $this->name.");
         }
 
         return $next($request);

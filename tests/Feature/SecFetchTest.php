@@ -10,7 +10,7 @@ use Revolution\FetchMetadata\Middleware\SecFetchDest;
 use Revolution\FetchMetadata\Middleware\SecFetchMode;
 use Revolution\FetchMetadata\Middleware\SecFetchSite;
 use Revolution\FetchMetadata\Middleware\SecFetchUser;
-use Symfony\Component\HttpKernel\Exception\InvalidMetadataException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Tests\TestCase;
 
 class SecFetchTest extends TestCase
@@ -43,9 +43,7 @@ class SecFetchTest extends TestCase
         $response = $this->withHeader('Sec-Fetch-Site', 'cross-site')
             ->postJson('site');
 
-        Exceptions::assertReported(fn (InvalidMetadataException $e) => $e->getMessage() === 'Invalid Sec-Fetch-Site.');
-
-        $response->assertStatus(500);
+        $response->assertStatus(400);
     }
 
     public function test_site_multiple()
@@ -77,9 +75,7 @@ class SecFetchTest extends TestCase
         $response = $this->withHeader('Sec-Fetch-Mode', 'no-cors')
             ->postJson('mode');
 
-        Exceptions::assertReported(fn (InvalidMetadataException $e) => $e->getMessage() === 'Invalid Sec-Fetch-Mode.');
-
-        $response->assertStatus(500);
+        $response->assertStatus(400);
     }
 
     public function test_dest_successful()
@@ -97,9 +93,7 @@ class SecFetchTest extends TestCase
         $response = $this->withHeader('Sec-Fetch-Dest', 'empty')
             ->postJson('dest');
 
-        Exceptions::assertReported(fn (InvalidMetadataException $e) => $e->getMessage() === 'Invalid Sec-Fetch-Dest.');
-
-        $response->assertStatus(500);
+        $response->assertStatus(400);
     }
 
     public function test_user_successful()
@@ -116,8 +110,6 @@ class SecFetchTest extends TestCase
 
         $response = $this->postJson('user');
 
-        Exceptions::assertReported(fn (InvalidMetadataException $e) => $e->getMessage() === 'Invalid Sec-Fetch-User.');
-
-        $response->assertStatus(500);
+        $response->assertStatus(400);
     }
 }
